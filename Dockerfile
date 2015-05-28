@@ -5,6 +5,9 @@ RUN apt-get install -y python python-dev
 RUN apt-get install -y python-pip
 RUN pip install locustio
 
+RUN mkdir -p /scripts
+ADD ./scripts/main.py /scripts/main.py
+
 EXPOSE 8089
 
-ENTRYPOINT ["locust"]
+ENTRYPOINT ["locust", "-f", "/scripts/main.py"]

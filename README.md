@@ -1,17 +1,27 @@
 # docker-locust
 
-A Docker container that can run the load testing framework [locust.io](http://locust.io).
+A Docker image that can run the load testing framework [locust.io](http://locust.io).
 
 ## Usage
 
-### Build the Docker Image
+### Building the Image
 
-`docker build -t locust /path/to/dockerfile`
+* Clone the docker-locust repo using `git pull https://github.com/rktbear/docker-locust.git`
+* Store your load testing scripts in the file `./docker-locust/scripts/main.py`
+* Build the Docker image using `docker build -t locust ./docker-locust/`
+
+This will create a Docker image that can run Locust using a particular load testing script (i.e. the load testing script is bound to the image and container).
+
+__NOTE__: The image needs to be rebuilt every time the load testing script changes!
 
 ### Run Locust - Single Node
 
-The docker container acts as a locust executable so all arguments after the container is run are parsed to locust.
+The endpoint of the service being load tested should be set in the environment variable `LOCUST_HOST` when starting the container.
 
-__IMPORTANT__: No Locust test scripts are built into the image so you must mount a path on the host where the scripts are found (e.g. `/path/to/locustfiles/`).
+`docker run -p 8089:8089 --name=locust -e LOCUST_HOST=http://thehost.com locust`
 
-`docker run -p 8089:8089 -v /path/to/locustfiles:/opt/locust -f /opt/locust/locustfile.py`
+The locust frontend will be accessible from the host at [http://127.0.0.1:8089](http://127.0.0.1:8089).
+
+### Run Locust - Master or Slave
+
+[TBD]
