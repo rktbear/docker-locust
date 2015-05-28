@@ -16,7 +16,7 @@ __NOTE__: The image needs to be rebuilt every time the load testing script chang
 
 ### Run Locust - Single Node
 
-The endpoint of the service being load tested should be set in the environment variable `LOCUST_HOST` when starting the container.
+The endpoint of the service being load tested should be set in the environment variable `LOCUST_HOST` when starting the container (provided you pull the host out of the environment variable in your script).
 
 `docker run -p 8089:8089 --name=locust -e LOCUST_HOST=http://thehost.com locust`
 
