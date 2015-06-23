@@ -1,16 +1,15 @@
-from locust import HttpLocust, TaskSet, task
-import os
+from locust import TaskSet, task
+import docker
+
+docker.init()
 
 class UserBehaviour(TaskSet):
     @task
     def task(self):
-        print "A fake task! Write a test!"
+        response = docker.post(client, "/test/url/10", "some_data")
+        print "Response Code: " + response.status_code
 
-class User(HttpLocust):
+class User(docker.DockerHttpLocust):
     task_set = UserBehaviour
     min_wait = 5000
     max_wait = 15000
-
-    # This line is here to allow the host to be set in an environment variable
-    # when running inside a Docker container!
-    host = os.environ["LOCUST_HOST"]

@@ -5,9 +5,12 @@ RUN apt-get install -y python python-dev
 RUN apt-get install -y python-pip
 RUN pip install locustio
 
-RUN mkdir -p /scripts
-ADD ./scripts/main.py /scripts/main.py
+RUN mkdir -p /locust/scripts
+ADD ./scripts/main.py /locust/scripts/main.py
+ADD ./scripts/docker.py /locust/scripts/docker.py
 
 EXPOSE 8089
 
-ENTRYPOINT ["locust", "-f", "/scripts/main.py"]
+ENV REQUEST_LOG "/locust/requests.log"
+
+ENTRYPOINT ["locust", "-f", "/locust/scripts/main.py"]

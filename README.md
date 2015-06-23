@@ -1,27 +1,41 @@
 # docker-locust
 
-A Docker image that can run the load testing framework [locust.io](http://locust.io).
+Running HTTP load tests using [locust.io](http://locust.io) within a Docker container.
+
+The load testing script is built into the container and provides the ability to 
+store HTTP request statistics to disk.
 
 ## Usage
 
-### Building the Image
+### Writing Locust Script
 
-* Clone the docker-locust repo using `git pull https://github.com/rktbear/docker-locust.git`
-* Store your load testing scripts in the file `./docker-locust/scripts/main.py`
-* Build the Docker image using `docker build -t locust ./docker-locust/`
+An example script can be found in `scripts/main.py`.
 
-This will create a Docker image that can run Locust using a particular load testing script (i.e. the load testing script is bound to the image and container).
+* Import docker with `import docker`.
+* Always call `docker.init()` at the top of the script.
+* The locust class must sub-class `DockerHttpLocust`.
+* HTTP requests must be done with: `docker.post()`, `docker.get()`, and `docker.put()`.
 
-__NOTE__: The image needs to be rebuilt every time the load testing script changes!
+### Building 
 
-### Run Locust - Single Node
+1). `git pull https://github.com/rktbear/docker-locust.git`
+2). Create a load test script in `./docker-locust/scripts/main.py`
+3). `docker build -t locust ./docker-locust/`
 
-The endpoint of the service being load tested should be set in the environment variable `LOCUST_HOST` when starting the container (provided you pull the host out of the environment variable in your script).
+### Running
 
-`docker run -p 8089:8089 --name=locust -e LOCUST_HOST=http://thehost.com locust`
+`docker run -d -p 8089:8089 --name=locust -e LOCUST_HOST=$END_POINT locust --no-web -c $USERS -r $HATCH_RATE`
 
-The locust frontend will be accessible from the host at [http://127.0.0.1:8089](http://127.0.0.1:8089).
+### View all Requests
 
-### Run Locust - Master or Slave
+Print out all HTTP requests. This data is only available while the container is running!
 
-[TBD]
+`docker exec locust cat /locust/requests.log`
+
+The format of each request:
+
+`<epoch_ms> <request_time_ms> <method> <url> <status_code>`
+
+E.g.
+
+`1435020266242 92 POST /claim/api/v1/products/test/users/0/tokens 201`
