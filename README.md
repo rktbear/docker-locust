@@ -24,7 +24,14 @@ An example script can be found in `scripts/main.py`.
 
 ### Running
 
-`docker run -d -p 8089:8089 --name=locust -e LOCUST_HOST=$END_POINT locust --no-web -c $USERS -r $HATCH_RATE`
+```
+docker run -d \ 
+       -p 8089:8089 \
+       --name=locust \
+       -e LOCUST_HOST=$END_POINT \
+       locust \
+       --no-web -c $USERS -r $HATCH_RATE
+```
 
 ### View all Requests
 
