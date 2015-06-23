@@ -18,9 +18,9 @@ An example script can be found in `scripts/main.py`.
 
 ### Building 
 
-1). `git pull https://github.com/rktbear/docker-locust.git`
-2). Create a load test script in `./docker-locust/scripts/main.py`
-3). `docker build -t locust ./docker-locust/`
+1. `git pull https://github.com/rktbear/docker-locust.git`
+2. Create a load test script in `./docker-locust/scripts/main.py`
+3. `docker build -t locust ./docker-locust/`
 
 ### Running
 
