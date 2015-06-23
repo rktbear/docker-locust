@@ -38,4 +38,4 @@ The format of each request:
 
 E.g.
 
-`1435020266242 92 POST /claim/api/v1/products/test/users/0/tokens 201`
+`1435020266242 92 POST /my/test/service 201`
