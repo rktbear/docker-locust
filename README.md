@@ -33,7 +33,7 @@ docker run -d \
        --no-web -c $USERS -r $HATCH_RATE
 ```
 
-### View all Requests
+### View all Requests (raw data)
 
 Print out all HTTP requests. This data is only available while the container is running!
 
@@ -46,3 +46,7 @@ The format of each request:
 E.g.
 
 `1435020266242 92 POST /my/test/service 201`
+
+### View all Requests (as a graph)
+
+To view response times graphically use the Python script `show_response_times.py <requests_filename>`.
